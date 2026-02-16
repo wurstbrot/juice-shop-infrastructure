@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: multi-juicer-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/instance: balancer-multi-juicer
+    app.kubernetes.io/name: balancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
