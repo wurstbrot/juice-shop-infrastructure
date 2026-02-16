@@ -182,16 +182,16 @@ run_instance_test() {
             log "Current instances: $total total ($running running, $pending pending)"
             
             if [ "$config_limit" != "unlimited" ] && [ "$config_limit" != "unknown" ]; then
-                if [ $total -ge $config_limit ]; then
+                if [ "$total" -ge "$config_limit" ] 2>/dev/null; then
                     log "Hit configured limit of $config_limit instances"
                     peak_instances=$total
                     break
                 fi
             fi
             
-            if [ $total -eq $prev_count ]; then
+            if [ "$total" -eq "$prev_count" ] 2>/dev/null; then
                 steady_checks=$((steady_checks + 1))
-                if [ $steady_checks -ge 3 ]; then
+                if [ "$steady_checks" -ge "3" ]; then
                     log "Instance count stable at $total for 3 checks"
                     peak_instances=$total
                     break
@@ -223,9 +223,9 @@ run_instance_test() {
     
     log "Final: $final_total total ($final_running running, $final_pending pending)"
     
-    if [ $exit_code -eq 2 ]; then
+    if [ "$exit_code" -eq "2" ] 2>/dev/null; then
         warning "Stopped due to HTTP 500 (instance limit hit)"
-    elif [ $peak_instances -ge $config_limit ] && [ "$config_limit" != "unlimited" ]; then
+    elif [ "$peak_instances" -ge "$config_limit" ] 2>/dev/null && [ "$config_limit" != "unlimited" ]; then
         log "Stopped due to config limit"
     else
         log "Stopped due to stable count"
