@@ -35,7 +35,7 @@ kubectl apply -f deploy.yaml
 kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
-  --timeout=120s
+  --timeout=220s
 
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.k8s.io/v1
